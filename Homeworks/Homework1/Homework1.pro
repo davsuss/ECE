@@ -17,4 +17,8 @@ TEMPLATE = app
 
 
 SOURCES += \
+    testproffunc.cpp \
     profFunc.cpp
+
+HEADERS += \
+    profFunc.h
