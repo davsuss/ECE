@@ -9,10 +9,12 @@ QT       += core
 QT       -= gui
 
 TARGET = Homework1
+CONFIG   += qtestlib
 CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += \
+    profFunc.cpp
