@@ -27,5 +27,5 @@ void TestprofFunc::toUpper()
     QCOMPARE(string.toUpper(), result);
 }
 
-QTEST_MAIN(TestQString)
+QTEST_MAIN(TestprofFunc)
 #include "profFunc.moc"
