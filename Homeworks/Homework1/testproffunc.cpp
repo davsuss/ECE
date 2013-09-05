@@ -1,9 +1,14 @@
+//David Sussman
+//Class: TestprofFunc
+//Description: Testing class which tests,
+//int profFunc(int sourceStringLen, const char *sourceString,int destStringLen, char *destString);
 #include <QtTest/QtTest>
 #include "profFunc.h"
 #include <string>
 #include <QDebug>
 using namespace std;
-//int profFunc(int sourceStringLen, const char *sourceString,int destStringLen, char *destString);
+
+//
 class TestprofFunc: public QObject
 {
     Q_OBJECT
@@ -15,6 +20,8 @@ private slots:
 
 void TestprofFunc::testProfFunc_data()
 {
+
+    QString qt = NULL;
     //Function Inputs
     QTest::addColumn<int>("sourceStringLen");
     QTest::addColumn<QString>("sourceString");
@@ -25,23 +32,24 @@ void TestprofFunc::testProfFunc_data()
     QTest::addColumn<QString>("resultDestString");
     QTest::addColumn<int>("expectedResult");
 
-    QTest::newRow("Test 1") << 10 << "Virginia Tech" << 10 << "b         " <<  "Virginia T" << 10;
-    QTest::newRow("Test 2") << 0 << QString() << 10 << "b         " << "b         " << 0;
+    QTest::newRow("Test 1") << 10 << "Virginia Tech" << 10 << "          " <<  "Virginia T" << 10;
+    QTest::newRow("Test 2") << 0 << "" << 10 << "          " << "          " << 0;
     QTest::newRow("Test 3") << 10 << "Virginia Tech" << 0 <<QString() << QString() << 0;
+
 }
 
 void TestprofFunc::testProfFunc()
 {
+    //Fetching Data
     QFETCH(int, sourceStringLen);
     QFETCH(QString, sourceString);
     QFETCH(int, destStringLen);
     QFETCH(QString, destString);
-
-
     QFETCH(QString, resultDestString);
     QFETCH(int, expectedResult);
 
-     string sourceCString = sourceString.toStdString();
+    //Setting QString to const char* and char*
+    string sourceCString = sourceString.toStdString();
     const char *source = sourceCString.c_str();
 
     char* dest;
