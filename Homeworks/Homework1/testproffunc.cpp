@@ -32,9 +32,11 @@ void TestprofFunc::testProfFunc_data()
     QTest::addColumn<QString>("resultDestString");
     QTest::addColumn<int>("expectedResult");
 
-    QTest::newRow("Test 1") << 10 << "Virginia Tech" << 10 << "          " <<  "Virginia T" << 10;
-    QTest::newRow("Test 2") << 0 << "" << 10 << "          " << "          " << 0;
-    QTest::newRow("Test 3") << 10 << "Virginia Tech" << 0 <<QString() << QString() << 0;
+    QTest::newRow("Larger Source") << 13 << "Virginia Tech" << 10 << "          " <<  "Virginia T" << 10;
+    QTest::newRow("Larger Destination") << 8 << "Virginia" << 10 << "          " <<  "Virginia  " << 8;
+    QTest::newRow("Same Size") << 8 << "Virginia" << 8 << "        " <<  "Virginia" << 8;
+    QTest::newRow("Empty Source") << 0 << QString() << 10 << "          " << "          " << 0;
+    QTest::newRow("Empty Destination") << 10 << "Virginia Tech" << 0 <<QString() << QString() << 0;
 
 }
 

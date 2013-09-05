@@ -7,12 +7,11 @@ int profFunc(int sourceStringLen, const char *sourceString,int destStringLen, ch
     int result = 0;
     for(int x = 0; x < sourceStringLen; x++)
     {
-
-        if(x > destStringLen)
+        if((x) >= destStringLen)
             break;
-
       *(destString+x) = *(sourceString+x);
       result++;
+
     }
     return result;
 }
