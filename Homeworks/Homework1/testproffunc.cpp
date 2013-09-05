@@ -20,8 +20,6 @@ private slots:
 
 void TestprofFunc::testProfFunc_data()
 {
-
-    QString qt = NULL;
     //Function Inputs
     QTest::addColumn<int>("sourceStringLen");
     QTest::addColumn<QString>("sourceString");
