@@ -1,4 +1,10 @@
 #include "andgate.h"
+#include <QList>
+#include <QFile>
+#include <QDir>
+#include <QTextStream>
+#include <QDebug>
+using namespace std;
 // Your program must do the following (and meet the other requirements for the assignment):
 // Step 1: Read in an integer that is the number of two input "AND" gates in the circuit from the text file "circuit.txt"
 // Step 2: If there are N "AND" gates, then you will read in N AND gates from "circuit.txt", where the input for the ith gate is
@@ -22,7 +28,8 @@
 //         (b) Set k j v
 //             where "set" is a string
 //               k is an integer, 0<=k<N, indicating a gate number
-//               j is an integer, 1<=j<=2, indicating the input number
+//               j is anust start with AND
+//            input1 is an integer, i integer, 1<=j<=2, indicating the input number
 //               v is an integer indicating the value of the input, 0 for false, 1 for true
 //             The set command should tie the jth input of the kth gate to true or false.
 // Step 4: If there is another input line in "circuit.txt", then go back to Step 3.
@@ -52,6 +59,91 @@ bool gateLessThan(andGate *g1,andGate *g2)
 
 int main()
 {
+    //init
+    QList<andGate*> gates;
+    QString inputCommand = "";
+    int inputArguementOne = 0;
+    int inputArguementTwo = 0;
+    int inputArguementThree = 0;
+
+    //Opening circuit.txt
+    QFile input("circuit.txt");
+    input.open(QIODevice::ReadOnly);
+    QTextStream stream(&input);
+
+    int numberOfGates;
+    stream >> numberOfGates;
+    qDebug() << "Number of gates in the circuit is " << numberOfGates;
+    for(int x = 0; x < numberOfGates;x++)
+    {
+        QString name = "";
+        andGate* gate = new andGate;
+        gate->init();
+        int connectionone = 0;
+        int connectiontwo = 0;
+        stream  >> name ;
+        stream >> connectionone;
+        stream >> connectiontwo;
+        gate->setName(name);
+        if(connectionone != -1)
+            gate->setInputOne(gates.value(connectionone));
+
+        if(connectiontwo != -1)
+            gate->setInputTwo(gates.value(connectiontwo));
+        qDebug() << "Read in Gate  " << name << "  with inputs  " << connectionone << " , " << connectiontwo;
+        gates.append(gate);
+
+    }
+
+    stream >> inputCommand;
+    while(inputCommand != "")
+    {
+      inputCommand = inputCommand.toUpper();
+      if(inputCommand == "EVAL")
+      {
+        stream >> inputArguementOne;
+        qDebug() << "The Output of " <<  gates.value(inputArguementOne)->getName() << " is " <<  (gates.value(inputArguementOne)->eval()?1:0);
+      }
+
+      else if(inputCommand == "SET")
+      {
+        stream >> inputArguementOne;
+        stream >> inputArguementTwo;
+        stream >> inputArguementThree;
+        if(inputArguementTwo == 1)
+        {
+            gates.value(inputArguementOne)->setInputOne((inputArguementThree != 0));
+            qDebug() << "InputOne of gate " << gates.value(inputArguementOne)->getName() << "is set to " <<((inputArguementThree != 0)?1:0);
+        }
+            else
+        {
+           gates.value(inputArguementOne)->setInputTwo((inputArguementThree != 0));
+           qDebug() << "InputTwo of gate " << gates.value(inputArguementOne)->getName() << "is set to " << ((inputArguementThree != 0)?1:0);
+        }
+      }
+
+    stream >> inputCommand;
+    }
+ //Printing the Sorted List
+    qDebug() << "Sorted Gate List:";
+    int least = 0;
+    andGate* leastGate = NULL;
+    while(gates.size() > 1)
+    {
+        least = 0;
+        for(int x = 1; x < gates.size() ; x++)
+       {
+
+       if(!gateLessThan(gates.value(least),gates.value(x)))
+           least = x;
+       }
+        leastGate = gates.takeAt(least);
+        qDebug() << leastGate->getName() << "has inputs " << leastGate->getInputOneName() << " , " << leastGate->getInputTwoName();
+
+
+    }
+    leastGate = gates.takeAt(0);
+    qDebug() << leastGate->getName() << "has inputs " << leastGate->getInputOneName() << " , " << leastGate->getInputTwoName();
 
     return 0;
 }

@@ -36,6 +36,15 @@ public:
     //     (c) continue execution
     bool eval() const;
 private:
+  QString m_name;
+  struct input
+  {
+  bool isConnected;
+  andGate* ConnectedAnd;
+  bool  ConnectedBool;
+  }m_inputOne,m_inputTwo;
+
+
     // Define the private data members that you need here
 };
 
