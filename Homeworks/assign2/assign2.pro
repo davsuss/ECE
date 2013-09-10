@@ -1,7 +1,6 @@
 # -------------------------------------------------
 # Project created by QtCreator 2013-09-04T13:41:07
 # -------------------------------------------------
-QT += testlib
 QT -= gui
 TARGET = assign2
 CONFIG += console

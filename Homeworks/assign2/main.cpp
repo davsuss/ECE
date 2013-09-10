@@ -67,8 +67,15 @@ int main()
     int inputArguementThree = 0;
 
     //Opening circuit.txt
-    QFile input("circuit.txt");
+    QString path = "circuit.txt";
+    QFile input(path);
     input.open(QIODevice::ReadOnly);
+    if(!input.isOpen())
+    {
+        qDebug() << "ERROR: Cannot Open " << path;
+        return 0;
+    }
+
     QTextStream stream(&input);
 
     int numberOfGates;
@@ -134,7 +141,7 @@ int main()
         for(int x = 1; x < gates.size() ; x++)
        {
 
-       if(!gateLessThan(gates.value(least),gates.value(x)))
+       if(gateLessThan(gates.value(x),gates.value(least)))
            least = x;
        }
         leastGate = gates.takeAt(least);

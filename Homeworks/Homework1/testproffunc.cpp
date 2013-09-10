@@ -60,6 +60,7 @@ void TestprofFunc::testProfFunc()
 
     int result = profFunc(sourceStringLen,source,destStringLen,dest);
     QCOMPARE(result,expectedResult);
+
     QCOMPARE(QString::fromUtf8(dest),resultDestString);
 }
 
