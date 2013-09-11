@@ -21,7 +21,7 @@ static const uint qt_meta_data_TestandGate[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -31,25 +31,19 @@ static const uint qt_meta_data_TestandGate[] = {
  // slots: signature, parameters, type, tag, flags
       13,   12,   12,   12, 0x08,
       20,   12,   12,   12, 0x08,
-      35,   12,   12,   12, 0x08,
-      45,   12,   12,   12, 0x08,
-      60,   12,   12,   12, 0x08,
-      70,   12,   12,   12, 0x08,
-      89,   12,   12,   12, 0x08,
-     103,   12,   12,   12, 0x08,
-     122,   12,   12,   12, 0x08,
-     136,   12,   12,   12, 0x08,
-     148,   12,   12,   12, 0x08,
+      32,   12,   12,   12, 0x08,
+      39,   12,   12,   12, 0x08,
+      55,   12,   12,   12, 0x08,
+      66,   12,   12,   12, 0x08,
+      78,   12,   12,   12, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_TestandGate[] = {
-    "TestandGate\0\0init()\0getName_data()\0"
-    "getName()\0setName_data()\0setName()\0"
-    "setInputOne_data()\0setInputOne()\0"
-    "setInputTwo_data()\0setInputTwo()\0"
-    "eval_data()\0eval()\0"
+    "TestandGate\0\0init()\0Name_data()\0Name()\0"
+    "setInput_data()\0setInput()\0eval_data()\0"
+    "eval()\0"
 };
 
 void TestandGate::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -59,16 +53,12 @@ void TestandGate::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         TestandGate *_t = static_cast<TestandGate *>(_o);
         switch (_id) {
         case 0: _t->init(); break;
-        case 1: _t->getName_data(); break;
-        case 2: _t->getName(); break;
-        case 3: _t->setName_data(); break;
-        case 4: _t->setName(); break;
-        case 5: _t->setInputOne_data(); break;
-        case 6: _t->setInputOne(); break;
-        case 7: _t->setInputTwo_data(); break;
-        case 8: _t->setInputTwo(); break;
-        case 9: _t->eval_data(); break;
-        case 10: _t->eval(); break;
+        case 1: _t->Name_data(); break;
+        case 2: _t->Name(); break;
+        case 3: _t->setInput_data(); break;
+        case 4: _t->setInput(); break;
+        case 5: _t->eval_data(); break;
+        case 6: _t->eval(); break;
         default: ;
         }
     }
@@ -107,9 +97,9 @@ int TestandGate::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 7;
     }
     return _id;
 }

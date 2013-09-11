@@ -48,11 +48,15 @@ QString andGate::getInputTwoName() const
 
 void andGate::setInputOne(andGate *inputOne)
 {
+    if(inputOne == NULL)
+        return;
  m_inputOne.isConnected = true;
  m_inputOne.ConnectedAnd = inputOne;
 }
 void andGate::setInputTwo(andGate *inputTwo)
 {
+    if(inputTwo == NULL)
+        return;
 m_inputTwo.isConnected = true;
 m_inputTwo.ConnectedAnd = inputTwo;
 }
