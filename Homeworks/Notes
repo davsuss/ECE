@@ -1,0 +1,5 @@
+-Instead of using input numbers, we will be using names. 
+-QMap(contains of gates) 
+ Container of Objects 
+ With a key (what you will use to find the object within the list)
+-and gate and or gates

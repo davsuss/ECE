@@ -8,7 +8,10 @@ CONFIG += console
 CONFIG -= app_bundle
 TEMPLATE = app
 SOURCES += main.cpp \
-    gate.cpp
-HEADERS += gate.h
+    gate.cpp \
+    andgate.cpp \
+    orgate.cpp
+HEADERS += gate.h \
+    andgate.h \ orgate.h
 OTHER_FILES += circuit.txt \
     ExpectedOutput.txt

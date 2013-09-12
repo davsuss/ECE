@@ -3,7 +3,8 @@
 #include <QDebug>
 #include <QString>
 #include "gate.h"
-
+#include "andgate.h"
+#include "orgate.h"
 // Your program must do the following (and meet the other requirements for the assignment):
 // Step 1: Read in an integer that is the number of logic gates in the circuit from the text file "circuit.txt"
 // Step 2: If there are N logic gates, then you will read in N logic gates from "circuit.txt", where the input for the ith gate is
@@ -59,6 +60,7 @@
 
 int main()
 {
-
+ andGate gate(new QObject);
+ gate.init(2);
     return 0;
 }
