@@ -1,0 +1,29 @@
+7
+AND1 2
+ANDgatea 2
+AND2 2
+ANDgateb 2
+And6 4
+Or1 2
+OrTwo 2
+EVAL AND1
+connect AND1 0 True
+Connect AND1 1 False
+EVAL AND1
+cOnnecT AND1 1 True
+EVAL AND1
+connect ANDgatea 0 AND1
+connecT ANDgatea 1 False
+Eval ANDgatea
+connect Or1 0 AND1
+Connect Or1 1 ANDgatea
+Eval Or1
+Connect AND2 0 ANDgatea
+Connect AND2 1 Or1
+Connect ANDgateb 0 True
+Connect ANDgateb 1 ANDgatea
+Connect And6 0 AND1
+Connect And6 1 ANDgateb
+connect And6 2 True
+connect And6 3 AND2
+Eval And6

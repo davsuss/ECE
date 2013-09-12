@@ -1,0 +1,60 @@
+Number of gates in the circuit is 7
+Read in gate AND1 with 2 inputs
+Read in gate ANDgatea with 2 inputs
+Read in gate AND2 with 2 inputs
+Read in gate ANDgateb with 2 inputs
+Read in gate And6 with 4 inputs
+Read in gate Or1 with 2 inputs
+Read in gate OrTwo with 2 inputs
+Read in command: EVAL AND1
+ERROR: Cannot evaluate gate  "AND1" : Input  0  is not specified.  Value returned will be meaningless.
+ERROR: Cannot evaluate gate  "AND1" : Input  1  is not specified.  Value returned will be meaningless.
+The output of AND1 is 0
+Read in command: connect AND1 0 True
+Read in command: Connect AND1 1 False
+Read in command: EVAL AND1
+The output of AND1 is 0
+Read in command: cOnnecT AND1 1 True
+Read in command: EVAL AND1
+The output of AND1 is 1
+Read in command: connect ANDgatea 0 AND1
+Read in command: connecT ANDgatea 1 False
+Read in command: Eval ANDgatea
+The output of ANDgatea is 0
+Read in command: connect Or1 0 AND1
+Read in command: Connect Or1 1 ANDgatea
+Read in command: Eval Or1
+The output of Or1 is 1
+Read in command: Connect AND2 0 ANDgatea
+Read in command: Connect AND2 1 Or1
+Read in command: Connect ANDgateb 0 True
+Read in command: Connect ANDgateb 1 ANDgatea
+Read in command: Connect And6 0 AND1
+Read in command: Connect And6 1 ANDgateb
+Read in command: connect And6 2 True
+Read in command: connect And6 3 AND2
+Read in command: Eval And6
+The output of And6 is 0
+AND1 has 2 inputs:
+  Input 0: True
+  Input 1: True
+AND2 has 2 inputs:
+  Input 0: ANDgatea
+  Input 1: Or1
+ANDgatea has 2 inputs:
+  Input 0: AND1
+  Input 1: False
+ANDgateb has 2 inputs:
+  Input 0: True
+  Input 1: ANDgatea
+And6 has 4 inputs:
+  Input 0: AND1
+  Input 1: ANDgateb
+  Input 2: True
+  Input 3: AND2
+Or1 has 2 inputs:
+  Input 0: AND1
+  Input 1: ANDgatea
+OrTwo has 2 inputs:
+  Input 0: NotConnected
+  Input 1: NotConnected
