@@ -1,3 +1,7 @@
+//David Sussman
+//ECE3574
+//HW2
+//DUE 9/11/2013
 #include "andgate.h"
 #include <QList>
 #include <QFile>
@@ -60,13 +64,14 @@ bool gateLessThan(andGate *g1,andGate *g2)
 int main()
 {
     //init
-    QList<andGate*> gates;
+    QList<andGate> gates;
     QString inputCommand = "";
     int inputArguementOne = 0;
     int inputArguementTwo = 0;
     int inputArguementThree = 0;
 
     //Opening circuit.txt
+    //You Need to put the circuit.txt in the folder with the created executable, no way around it unless we can use an absolute path.
     QString path = "circuit.txt";
     QFile input(path);
     input.open(QIODevice::ReadOnly);
@@ -77,55 +82,65 @@ int main()
     }
 
     QTextStream stream(&input);
-
+    //Finding how many gates are in the file
     int numberOfGates;
     stream >> numberOfGates;
     qDebug() << "Number of gates in the circuit is " << numberOfGates;
+
+    //Parsing Gates
     for(int x = 0; x < numberOfGates;x++)
     {
+
+        //init
         QString name = "";
-        andGate* gate = new andGate;
-        gate->init();
+        andGate gate;
+        gate.init();
         int connectionone = 0;
         int connectiontwo = 0;
+
         stream  >> name ;
         stream >> connectionone;
         stream >> connectiontwo;
-        gate->setName(name);
+        gate.setName(name);
+
+
+        //reading in arguments for gate connections
         if(connectionone != -1)
-            gate->setInputOne(gates.value(connectionone));
+            gate.setInputOne(&gates[connectionone]);
 
         if(connectiontwo != -1)
-            gate->setInputTwo(gates.value(connectiontwo));
+            gate.setInputTwo(&gates[connectiontwo]);
         qDebug() << "Read in Gate  " << name << "  with inputs  " << connectionone << " , " << connectiontwo;
         gates.append(gate);
 
     }
-
+    //Reading in commands and parsing the comamnd arguments
     stream >> inputCommand;
     while(inputCommand != "")
     {
       inputCommand = inputCommand.toUpper();
+        //Evaluaton Command
       if(inputCommand == "EVAL")
       {
         stream >> inputArguementOne;
-        qDebug() << "The Output of " <<  gates.value(inputArguementOne)->getName() << " is " <<  (gates.value(inputArguementOne)->eval()?1:0);
+        qDebug() << "The Output of " <<  gates[inputArguementOne].getName() << " is " <<  (gates[inputArguementOne].eval()?1:0);
       }
-
+        //Setting Command
       else if(inputCommand == "SET")
       {
         stream >> inputArguementOne;
         stream >> inputArguementTwo;
         stream >> inputArguementThree;
+
         if(inputArguementTwo == 1)
-        {
-            gates.value(inputArguementOne)->setInputOne((inputArguementThree != 0));
-            qDebug() << "InputOne of gate " << gates.value(inputArguementOne)->getName() << "is set to " <<((inputArguementThree != 0)?1:0);
+        {//set to true
+            gates[inputArguementOne].setInputOne((inputArguementThree != 0));
+            qDebug() << "InputOne of gate " << gates[inputArguementOne].getName() << "is set to " <<((inputArguementThree != 0)?1:0);
         }
             else
-        {
-           gates.value(inputArguementOne)->setInputTwo((inputArguementThree != 0));
-           qDebug() << "InputTwo of gate " << gates.value(inputArguementOne)->getName() << "is set to " << ((inputArguementThree != 0)?1:0);
+        {//set to false
+           gates[inputArguementOne].setInputTwo((inputArguementThree != 0));
+           qDebug() << "InputTwo of gate " << gates[inputArguementOne].getName() << "is set to " << ((inputArguementThree != 0)?1:0);
         }
       }
 
@@ -134,23 +149,22 @@ int main()
  //Printing the Sorted List
     qDebug() << "Sorted Gate List:";
     int least = 0;
-    andGate* leastGate = NULL;
-    while(gates.size() > 1)
+    int left = 0;
+    while(left <= gates.size()-1)
     {
-        least = 0;
-        for(int x = 1; x < gates.size() ; x++)
+        least = left;
+        for(int x = left+1; x <= gates.size() -1 ; x++)
        {
 
-       if(gateLessThan(gates.value(x),gates.value(least)))
+            if(gateLessThan(&gates[x],&gates[least]))
            least = x;
        }
-        leastGate = gates.takeAt(least);
-        qDebug() << leastGate->getName() << "has inputs " << leastGate->getInputOneName() << " , " << leastGate->getInputTwoName();
 
-
+        qDebug() << gates[least].getName() << "has inputs " << gates[least].getInputOneName() << " , " << gates[least].getInputTwoName();
+        gates.swap(left,least);
+        left++;
     }
-    leastGate = gates.takeAt(0);
-    qDebug() << leastGate->getName() << "has inputs " << leastGate->getInputOneName() << " , " << leastGate->getInputTwoName();
+   // qDebug() << gates[gates.size()-1].getName() << "has inputs " << gates[gates.size()-1].getInputOneName() << " , " << gates[gates.size()-1].getInputTwoName();
 
     return 0;
 }

@@ -1,3 +1,7 @@
+//David Sussman
+//ECE3574
+//HW2
+//DUE 9/11/2013
 #include <QDebug>
 #include "andgate.h"
 
@@ -11,6 +15,7 @@
 */
 void andGate::init()
 {
+    //setting private members
     m_name = "";
     m_inputOne.ConnectedAnd = NULL;
     m_inputOne.ConnectedBool = false;
@@ -32,12 +37,17 @@ void andGate::setName(const QString & name)
 }
 QString andGate::getInputOneName() const
 {
+    if(!m_inputOne.isConnected)
+        return "X";
+    //If it is not connected by and, return the Connected Bool
     if(m_inputOne.ConnectedAnd != NULL)
         return m_inputOne.ConnectedAnd->getName();
     return m_inputOne.ConnectedBool?"True":"False";
 }
 QString andGate::getInputTwoName() const
 {
+    if(!m_inputTwo.isConnected)
+        return "X";
     if(m_inputTwo.ConnectedAnd != NULL)
         return m_inputTwo.ConnectedAnd->getName();
     return m_inputTwo.ConnectedBool?"True":"False";
@@ -64,7 +74,7 @@ void andGate::setInputOne(bool inputOne)
 {
     if(m_inputOne.isConnected && m_inputOne.ConnectedAnd != NULL)
     {
-        qDebug() << "WARNING: Input One of gate \" " << m_name << "\" is already set to \"" << m_inputOne.ConnectedAnd->getName() << "\" : Cannot set to a boolean value";
+        qDebug() << "WARNING: Input One of gate " << m_name << " is already set to " << m_inputOne.ConnectedAnd->getName() << " : Cannot set to a boolean value";
         return;
     }
     m_inputOne.isConnected = true;
@@ -75,7 +85,7 @@ void andGate::setInputTwo(bool inputTwo)
 {
     if(m_inputTwo.isConnected && m_inputTwo.ConnectedAnd != NULL)
     {
-        qDebug() << "WARNING: Input Two of gate \" " << m_name << "\" is already set to \"" << m_inputTwo.ConnectedAnd->getName() << "\" : Cannot set to a boolean value";
+        qDebug() << "WARNING: Input Two of gate" << m_name << "is already set to" << m_inputTwo.ConnectedAnd->getName() << ": Cannot set to a boolean value";
         return;
     }
     m_inputTwo.isConnected = true;
@@ -102,7 +112,7 @@ bool andGate::eval() const
   }
   if(!m_inputTwo.isConnected)
   {
-      qDebug() << "WARNING: Cannot evaluate gate  " << m_name << "Input Two is not specified.  Value returned will be meaningless.";
+      qDebug() << "WARNING: Cannot evaluate gate" << m_name << "Input Two is not specified.  Value returned will be meaningless.";
   }
   else
   {

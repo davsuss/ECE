@@ -1,6 +1,10 @@
-
+//David Sussman
+//ECE3574
+//HW2
+//DUE 9/11/2013
 #include <QtTest/QtTest>
 #include <QDebug>
+//MAY HAVE AN ISSUE WITH IMPORTING DEPENDING ON WHERE THE EXECUTABLE IS CREATED
 #include "/home/david/Documents/Git Projects/ECE/Homeworks/assign2/andgate.cpp"
 class TestandGate: public QObject
 {
@@ -14,7 +18,7 @@ private slots:
     void Name_data();
     void Name();
 
-    //A Test for both setInputOne() and setInputTwo() since the tests are identical, also for getInputOne (Two) since they are inter-dependent
+    //A Test for both setInputOne(BOOL AND ANDGATE*) and setInputTwo(BOOL AND ANDGATE*) since the tests are identical, also for getInputOneName (Two) since they are inter-dependent
     void setInput_data();
     void setInput();
 
@@ -57,6 +61,12 @@ void TestandGate::Name()
 void TestandGate::setInput_data()
 {
 /*
+This testing method tests the following
+SetInputONE/TWO(Bool)
+SetInputONE/TWO(AndGate*)
+GetInputONE/TWO()
+GetInputONE/TWO()
+
 
 For a Connection:
 Code "": Nothing Connected
@@ -75,11 +85,12 @@ QTest::newRow("Connecting AndGate with unconnected input") << "" << "and2"<< "an
 QTest::newRow("Connecting Boolean with previous Boolean Value") << "false" << "true" << "true";
 QTest::newRow("Connecting AndGate with previous Boolean Value") << "false" << "and2" << "and2";
 QTest::newRow("Connecting Boolean with previous AndGate Value") << "and2" << "false" << "and2";
-
+QTest::newRow("Getting an unconnected Input") << "" << "" << "x";
 }
 
 void TestandGate::setInput()
 {
+    //init
     andGate and1;
     andGate and2;
     and2.init();
@@ -89,6 +100,8 @@ void TestandGate::setInput()
     QFETCH(QString, CurrentConnection);
     QFETCH(QString, NewConnection);
     QFETCH(QString, expected);
+
+    //set current inputs states
     if(CurrentConnection =="true")
         and1.setInputOne(true);
     else if(CurrentConnection =="false")
@@ -103,6 +116,8 @@ void TestandGate::setInput()
     else if(CurrentConnection =="and2")
         and1.setInputTwo(&and2);
 
+
+    //setting the inputs to new states
     if(NewConnection =="true")
         and1.setInputOne(true);
     else if(NewConnection =="false")
@@ -121,6 +136,7 @@ void TestandGate::setInput()
 
 
     QCOMPARE(and1.getInputOneName().toLower(),expected);
+    QCOMPARE(and1.getInputTwoName().toLower(),expected);
 }
 
 void TestandGate::eval_data()
@@ -128,7 +144,6 @@ void TestandGate::eval_data()
 //Eval Test, eval will be called in and1 and expectedresult is the expected output of that function.
 
 /*
-
  For a Connection:
 Code "": Nothing Connected
 Code "true": True Connected

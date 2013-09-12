@@ -1,3 +1,4 @@
+//DUE 9/11/2013
 #ifndef ANDGATE_H
 #define ANDGATE_H
 #include <QString>
