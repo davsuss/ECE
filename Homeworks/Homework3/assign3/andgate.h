@@ -17,7 +17,7 @@ private:
     struct input
     {
       bool isConnected;
-      gate* ConnectedAND;
+      gatePtrType ConnectedAND;
       bool ConnectedBoolean;
     };
     QList<input> m_inputs;

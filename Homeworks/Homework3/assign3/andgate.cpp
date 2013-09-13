@@ -29,20 +29,27 @@ andGate::~andGate()
 
   unsigned int andGate::getNumInputs() const
  {
+      Q_ASSERT(getInitialized());
 
+      return m_inputs.size();
 
  }
 
   void andGate::setInput(unsigned int inputNum,gatePtrType inGate)
  {
+      Q_ASSERT(getInitialized());
+      m_inputs[inputNum].ConnectedAND = inGate;
+      m_inputs[inputNum].isConnected = true;
 
  }
 
   QString andGate::getInputName(unsigned int inputNum) const
  {
       Q_ASSERT(getInitialized());
-      if(!m_inputs[inputNum].isConnected);
+      if(!m_inputs[inputNum].isConnected)
+      {
           return gate::NotConnected;
+      }
 
       if(m_inputs[inputNum].ConnectedAND != NULL)
           return m_inputs[inputNum].ConnectedAND->getName();

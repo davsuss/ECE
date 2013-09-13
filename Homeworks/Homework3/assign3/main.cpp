@@ -2,6 +2,7 @@
 #include <QMap>
 #include <QDebug>
 #include <QString>
+#include <QFile>
 #include "gate.h"
 #include "andgate.h"
 #include "orgate.h"
@@ -60,7 +61,42 @@
 
 int main()
 {
- andGate gate(new QObject);
- gate.init(2);
+    QFile input("circuit.txt");
+    Qmap
+    input.open(QIODevice::ReadOnly | QIODevice::Text);
+    QTextStream inStream(&input);
+    if(!input.isOpen())
+     {
+        qDebug() << "ERROR: file cannot be opened";
+        return -1;
+     }
+    int numofGates = 0;
+    inStream >> numofGates;
+    qDebug() << "Number of gates in the circuit is " << numofGates;
+
+    for(int x = 0 ; x < numofGates; x++)
+    {
+       QString gateName;
+       int NumberOfInputs;
+       inStream >> gateName >> NumberofInputs;
+
+       if(gateName.left(2).compare("or",Qt::CaseInsensitive))
+       {
+           orGate gate(new QString);
+           gate.init(NumberOfInputs);
+           gate.setName(gateName);
+
+
+       }
+       else if(gateName.left(3).compare("and",Qt::CaseInsensitive))
+       {
+           andGate gate(new QString);
+           gate.init(NumberOfInputs);
+           gate.setName(gateName);
+
+       }
+
+    }
+
     return 0;
 }
