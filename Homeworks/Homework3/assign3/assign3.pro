@@ -9,9 +9,13 @@ CONFIG -= app_bundle
 TEMPLATE = app
 SOURCES += main.cpp \
     gate.cpp \
-    andgate.cpp \
-    orgate.cpp
+    orgate.cpp \
+    voltagesourcegate.cpp \
+    groundgate.cpp \
+    andgate.cpp
 HEADERS += gate.h \
-    andgate.h \ orgate.h
+    andgate.h \ orgate.h \
+    voltagesourcegate.h \
+    groundgate.h
 OTHER_FILES += circuit.txt \
     ExpectedOutput.txt

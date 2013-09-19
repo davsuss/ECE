@@ -1,4 +1,6 @@
-#include "andgate.h"
+#include "andGate.h"
+
+#include <QtPlugin>
 andGate::andGate(QObject *parent) : gate(parent)
 {
 
@@ -64,4 +66,5 @@ Q_ASSERT(getInitialized());
 
     return gate::NotConnected;
  }
+
 

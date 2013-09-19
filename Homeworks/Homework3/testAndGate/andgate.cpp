@@ -7,7 +7,13 @@ andGate::andGate(QObject *parent) : gate(parent)
 
 andGate::~andGate()
 {
-
+    Q_ASSERT(getInitialized());
+    int limit = getNumInputs();
+    for(int x = 0; x < limit;x++)
+    {
+        m_inputs[x].ConnectedGate = NULL;
+        m_inputs.removeAt(x);
+    }
 }
 
  bool andGate::eval() const

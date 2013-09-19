@@ -1,23 +1,16 @@
-#ifndef ORGATE_H
-#define ORGATE_H
+#ifndef VOLTAGESOURCEGATE_H
+#define VOLTAGESOURCEGATE_H
 #include "gate.h"
-class orGate : public gate
+class voltageSourceGate : public gate
 {
 public:
-    orGate(QObject *parent);
-    ~orGate();
+    voltageSourceGate(QObject* pointer);
+    ~voltageSourceGate();
     void init(unsigned int numInputs);
     bool eval() const;
     unsigned int getNumInputs() const;
     void setInput(unsigned int inputNum,gatePtrType inGate);
     QString getInputName(unsigned int inputNum) const;
-private:
-    struct input
-    {
-    bool isConnected;
-    gatePtrType ConnectedGate;
-    };
-    QList<input> m_inputs;
 };
 
-#endif // ORGATE_H
+#endif // VOLTAGESOURCEGATE_H

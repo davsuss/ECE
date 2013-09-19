@@ -1,6 +1,7 @@
 #ifndef ANDGATE_H
 #define ANDGATE_H
 #include "gate.h"
+#include "gate.cpp"
 #include <QList>
 class andGate : public gate
 {

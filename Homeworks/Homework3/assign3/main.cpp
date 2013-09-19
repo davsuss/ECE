@@ -6,6 +6,8 @@
 #include "gate.h"
 #include "andgate.h"
 #include "orgate.h"
+#include "groundgate.h"
+#include "voltagesourcegate.h"
 // Your program must do the following (and meet the other requirements for the assignment):
 // Step 1: Read in an integer that is the number of logic gates in the circuit from the text file "circuit.txt"
 // Step 2: If there are N logic gates, then you will read in N logic gates from "circuit.txt", where the input for the ith gate is
@@ -62,7 +64,13 @@
 int main()
 {
     QFile input("circuit.txt");
-    Qmap
+    QObject * parent = new QObject();
+    groundGate ground(parent);
+    voltageSourceGate voltage(parent);
+    ground.init(0);
+    voltage.init(0);
+    QMap<QString,gate *> gates;
+
     input.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream inStream(&input);
     if(!input.isOpen())
@@ -77,25 +85,77 @@ int main()
     for(int x = 0 ; x < numofGates; x++)
     {
        QString gateName;
-       int NumberOfInputs;
-       inStream >> gateName >> NumberofInputs;
 
-       if(gateName.left(2).compare("or",Qt::CaseInsensitive))
+       int NumberOfInputs = 0;
+       inStream >> gateName >> NumberOfInputs;
+
+       if(gateName.left(2).contains("or",Qt::CaseInsensitive))
        {
-           orGate gate(new QString);
-           gate.init(NumberOfInputs);
-           gate.setName(gateName);
-
-
+           orGate * orgate = new orGate(parent);
+           orgate->init(NumberOfInputs);
+           orgate->setName(gateName);
+           gates.insert(gateName,orgate);
+           qDebug() << "Read in gate " << qPrintable(gateName) << " with " << NumberOfInputs << "inputs";
        }
-       else if(gateName.left(3).compare("and",Qt::CaseInsensitive))
+       else if(gateName.left(3).contains("and",Qt::CaseInsensitive))
        {
-           andGate gate(new QString);
-           gate.init(NumberOfInputs);
-           gate.setName(gateName);
-
+           andGate * andgate = new andGate(parent);
+           andgate->init(NumberOfInputs);
+           andgate->setName(gateName);
+           gates.insert(gateName,andgate);
+           qDebug() << "Read in gate" << qPrintable(gateName) << "with " << NumberOfInputs << "inputs";
        }
 
+    }
+
+    QString command;
+    inStream >> command;
+    while(command != "")
+    {
+        if(command.contains("eval",Qt::CaseInsensitive))
+        {
+            QString evalGateName;
+            inStream >> evalGateName;
+            qDebug() << "Read in command:" << qPrintable(command)  << qPrintable(evalGateName);
+
+
+
+
+
+            qDebug() << "The value of" <<  qPrintable(evalGateName) <<  qPrintable(gates[evalGateName]->eval()?"1":"0");
+        }
+        else if(command.contains("connect",Qt::CaseInsensitive))
+        {
+            QString connectGateName;
+            int connectInputNumber;
+            QString connectInputValue;
+            inStream >> connectGateName >> connectInputNumber >> connectInputValue;
+           qDebug() << "Read in command:" << qPrintable(command) << qPrintable(connectGateName) << connectInputNumber << qPrintable(connectInputValue);
+            if(connectInputValue.left(3).contains("and",Qt::CaseInsensitive) || connectInputValue.left(2).contains("or",Qt::CaseInsensitive))
+            {
+                gates[connectGateName]->setInput(connectInputNumber,gates[connectInputValue]);
+            }
+            if(connectInputValue.contains("false",Qt::CaseInsensitive))
+            {
+                gates[connectGateName]->setInput(connectInputNumber,&ground);
+            }
+            if(connectInputValue.contains("true",Qt::CaseInsensitive))
+            {
+                gates[connectGateName]->setInput(connectInputNumber,&voltage);
+            }
+        }
+
+        inStream >> command;
+
+    }
+
+    foreach (gate * mapGate, gates)
+    {
+        qDebug() << qPrintable(mapGate->getName()) << "has" << mapGate->getNumInputs() << "inputs:";
+        for(unsigned int x = 0; x < mapGate->getNumInputs();x++)
+        {
+            qDebug() << " " << "input" << x << qPrintable(":") << qPrintable(mapGate->getInputName(x));
+        }
     }
 
     return 0;
